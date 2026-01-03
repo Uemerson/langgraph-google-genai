@@ -139,9 +139,11 @@ async def main():
         lambda s: (
             "retrieve_rag_node" if s["has_context"] else "cannot_answer_node"
         ),
+        path_map={
+            "has context": "retrieve_rag_node",
+            "has no context": "cannot_answer_node",
+        },
     )
-
-    # workflow.add_edge("retrieve_rag_node", "generate_answer_node")
 
     workflow.add_conditional_edges(
         "retrieve_rag_node",
@@ -150,6 +152,10 @@ async def main():
             if s["has_documents"]
             else "cannot_answer_node"
         ),
+        path_map={
+            "has documents": "generate_answer_node",
+            "no documents": "cannot_answer_node",
+        },
     )
 
     workflow.add_edge("generate_answer_node", END)
