@@ -1,0 +1,7 @@
+# @name Ask
+POST http://localhost:8000/conversation
+Content-Type: application/json
+
+{
+    "message": "What is LangGraph?"
+}
